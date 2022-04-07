@@ -14,7 +14,7 @@ h1{
 
 .content{
     margin: 0 auto;
-    width: 1000px;
+    width: 950px;
     display: flex;
     align-items: center;
 }
@@ -38,9 +38,14 @@ h1{
     justify-content: center;
 }
 
+.escondida{
+    display: none;
+}
+
 @media (max-width: 500px){
     h1{
         font-size: 36px;
+        width: 100%;
     }
 
     .content{
