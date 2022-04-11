@@ -15,31 +15,48 @@ h1{
 .content{
     margin: 0 auto;
     width: 950px;
-    display: flex;
-    align-items: center;
 }
 
 .cards{
-    margin: 0 auto;
+    margin: auto;
     display: flex;
     flex-wrap: wrap;
-}
-
-.card{
-    width: 118px;
-    height: 146px;
-    background-color: #A7E9AF;
-    border: 1px solid #99CEA8;
-    border-radius: 5px;
-    margin-right: 34px;
-    margin-bottom: 34px;
-    display: flex;
-    align-items: center;
     justify-content: center;
 }
 
-.escondida{
-    display: none;
+.card{
+    width: 120px;
+    height: 150px;
+    margin-right: 34px;
+    margin-bottom: 34px;
+    backface-visibility: hidden;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: .5s;
+}
+
+.card:active{
+    transform: scale(0.97);
+}
+
+.card.flip{
+    transform: rotateY(180deg);
+}
+
+.verso, .frente {
+    border-radius: 5px;
+    background-color: #A7E9AF;
+    border: 1px solid #99CEA8;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    object-fit: contain;
+    position: absolute;
+}
+
+.frente{
+    transform: rotateY(180deg)
 }
 
 @media (max-width: 500px){
@@ -48,12 +65,16 @@ h1{
         width: 100%;
     }
 
-    .content{
+    .content{    
         width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
     }
 
     .cards{
-        margin: 0 auto;
         display: block;
     }
+
+
 }

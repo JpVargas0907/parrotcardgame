@@ -1,5 +1,20 @@
 let qtdCartas = prompt("Com quantas cartas você quer iniciar o jogo?(Tem que ser um número par de cartas entre 4 e 14 cartas)")
-const imgList = ["./_imgs/bobrossparrot.gif", "./_imgs/bobrossparrot.gif", "./_imgs/explodyparrot.gif", "./_imgs/explodyparrot.gif", "./_imgs/fiestaparrot.gif", "./_imgs/fiestaparrot.gif", "./_imgs/metalparrot.gif", "./_imgs/metalparrot.gif", "./_imgs/revertitparrot.gif", "./_imgs/revertitparrot.gif", "./_imgs/tripletsparrot.gif", "./_imgs/tripletsparrot.gif","./_imgs/unicornparrot.gif", "./_imgs/unicornparrot.gif"]
+const imgList = [
+    "./_imgs/bobrossparrot.gif",
+    "./_imgs/bobrossparrot.gif",
+    "./_imgs/explodyparrot.gif",
+    "./_imgs/explodyparrot.gif",
+    "./_imgs/fiestaparrot.gif",
+    "./_imgs/fiestaparrot.gif",
+    "./_imgs/metalparrot.gif",
+    "./_imgs/metalparrot.gif",
+    "./_imgs/revertitparrot.gif",
+    "./_imgs/revertitparrot.gif",
+    "./_imgs/tripletsparrot.gif",
+    "./_imgs/tripletsparrot.gif",
+    "./_imgs/unicornparrot.gif",
+    "./_imgs/unicornparrot.gif"
+];
 
 const imgListCopy = []
 
@@ -7,11 +22,11 @@ while (qtdCartas % 2 !== 0 || qtdCartas < 4 || qtdCartas > 14) {
     qtdCartas = prompt("Error! Insira um valor válido:")
 }
 
-function comparador() { 
-	return Math.random() - 0.5; 
+function comparador() {
+    return Math.random() - 0.5;
 }
 
-for(let i = 0; i < qtdCartas; i++){
+for (let i = 0; i < qtdCartas; i++) {
     imgListCopy[i] = imgList[i];
 }
 
@@ -23,12 +38,56 @@ function distribuirCartas(qtdCartas) {
     imgListCopy.sort(comparador);
 
     while (contador < qtdCartas) {
-        elemento.innerHTML = elemento.innerHTML + 
-        `<li class="card">
-            <img class="desvirada, escondida" src="${imgListCopy[contador]}" alt="">
-            <img class="virada" src="./_imgs/front 1.png" alt="">
-        </li>`
+        elemento.innerHTML = elemento.innerHTML +
+            `<div class="card" data-card="${imgListCopy[contador]}">
+                <img class="frente" src="${imgListCopy[contador]}" alt="">
+                <img class="verso" src="./_imgs/front 1.png" alt="">
+            </div>`
 
-        contador ++
+        contador++
     }
+}
+
+const cards = document.querySelectorAll(".card");
+let firstCard, secondCard;
+let bloquearCarta = false;
+
+function virarCarta(){
+    if(bloquearCarta === true)return false
+    this.classList.add("flip");
+
+    if(!firstCard){
+        firstCard = this;
+        return false
+    } 
+
+    secondCard = this;
+    checarCartas();
+}
+
+cards.forEach(card => card.addEventListener('click', virarCarta))
+
+
+function checarCartas(){
+    let isMatch = firstCard.dataset.card === secondCard.dataset.card;
+    console.log(isMatch);
+
+    if (isMatch === false){
+        desabilitarCartas();
+    } else {
+        firstCard = undefined;
+        secondCard = undefined;
+    }
+}
+
+function desabilitarCartas(){
+    bloquearCarta = true;
+    setTimeout(() => {
+        firstCard.classList.remove("flip")
+        secondCard.classList.remove("flip")
+
+        bloquearCarta = false
+        firstCard = undefined
+        secondCard = undefined
+    }, 1000);
 }
