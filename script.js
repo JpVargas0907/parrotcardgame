@@ -51,6 +51,8 @@ function distribuirCartas(qtdCartas) {
 const cards = document.querySelectorAll(".card");
 let firstCard, secondCard;
 let bloquearCarta = false;
+let contadorJogadas = 0;
+let pontos = 0;
 
 function virarCarta(){
     if(bloquearCarta === true)return false
@@ -61,8 +63,12 @@ function virarCarta(){
         return false
     } 
 
+    contadorJogadas ++;
     secondCard = this;
     checarCartas();
+    if(pontos === (qtdCartas/2)){
+        alert(`Parabéns! Você ganhou em ${contadorJogadas} jogadas!`)
+    }
 }
 
 cards.forEach(card => card.addEventListener('click', virarCarta))
@@ -77,6 +83,7 @@ function checarCartas(){
     } else {
         firstCard = undefined;
         secondCard = undefined;
+        pontos ++;
     }
 }
 
@@ -91,3 +98,4 @@ function desabilitarCartas(){
         secondCard = undefined
     }, 1000);
 }
+
